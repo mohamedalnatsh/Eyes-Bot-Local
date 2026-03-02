@@ -1,57 +1,50 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const express = require('express');
 const qrcode = require('qrcode-terminal');
 
-// إعداد البوت ليعمل في بيئة السيرفر (Render)
+const app = express();
+const port = 8080;
+let lastQr = null;
+
 const client = new Client({
-    authStrategy: new LocalAuth(),
+    authStrategy: new LocalAuth({
+        dataPath: './.wwebjs_auth'
+    }),
     puppeteer: {
+        executablePath: '/usr/bin/chromium-browser', // مسار أوبنتو سيرفر
         headless: true,
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-accelerated-2d-canvas',
-            '--no-first-run',
-            '--no-zygote',
-            '--single-process', 
-            '--disable-gpu'
-        ],
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable'
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
 
-// إظهار رمز QR في السجلات (Logs)
 client.on('qr', (qr) => {
-    console.log('يرجى مسح رمز QR أدناه للربط:');
-    qrcode.generate(qr, {small: true});
+    lastQr = qr;
+    qrcode.generate(qr, { small: true });
 });
 
 client.on('ready', () => {
-    console.log('✅ تم الاتصال بنجاح! بوت مستشفى العيون جاهز للعمل.');
+    console.log('✅ البوت متصل وجاهز للعمل على VM!');
 });
 
-// منطق الرد على الرسائل
-client.on('message', async msg => {
-    const text = msg.body.toLowerCase();
+client.on('message_create', async (msg) => {
+    try {
+        if (msg.fromMe) return;
+        const text = msg.body.trim();
+        const menu = `🏥 *مستشفى العيون - القائمة الرئيسية*\n\n1️⃣ تعليمات تعقيم غرفة العمليات\n2️⃣ تعليمات استقبال مريض ليزر\n3️⃣ جداول المناوبات\n\n_أرسل الرقم المطلوب فقط_`;
 
-    if (text === 'بداية' || text === 'قائمة') {
-        await msg.reply(
-            "🏥 *مرحباً بك في نظام دعم مستشفى العيون*\n\n" +
-            "أرسل الرقم المطلوب:\n" +
-            "1. إجراءات التشغيل (SOPs)\n" +
-            "2. جداول المناوبات اليومية\n" +
-            "3. تعليمات العمليات"
-        );
-    } 
-    else if (text === '1') {
-        await msg.reply("📋 *إجراءات التشغيل:* \n- تعقيم (ارسل 'تعقيم')\n- استقبال (ارسل 'ليزر')");
-    } 
-    else if (text === '2') {
-        await msg.reply("📅 *المناوبات:* د. أحمد (مناوب العمليات) - م. سارة (مشرف التمريض)");
-    }
-    else if (text === 'تعقيم') {
-        await msg.reply("🧴 *خطوات التعقيم:* \n1. تطهير الأسطح بـ.. \n2. تشغيل جهاز.. \n3. توثيق السجل.");
-    }
+        if (text === '1') await client.sendMessage(msg.from, '🔹 *تعليمات تعقيم الغرفة (تجريبي)*');
+        else if (text === '2') await client.sendMessage(msg.from, '🔹 *تعليمات استقبال مريض ليزر (تجريبي)*');
+        else if (text === '3') await client.sendMessage(msg.from, '🔹 *جداول المناوبات (تجريبي)*');
+        else await client.sendMessage(msg.from, menu); // الرد بالقائمة على أي كلمة أخرى
+    } catch (err) { console.error('Error:', err.message); }
 });
 
+app.get('/', (req, res) => {
+    if (lastQr) {
+        const qrImage = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(lastQr)}&size=300x300`;
+        res.send(`<center><h1>امسح الرمز</h1><img src="${qrImage}"></center>`);
+    } else { res.send('<center><h1>✅ البوت متصل</h1></center>'); }
+});
+
+app.listen(port, '0.0.0.0', () => console.log(`QR Server on port ${port}`));
 client.initialize();
