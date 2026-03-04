@@ -33,7 +33,7 @@ client.on('message', async msg => {
     const text = msg.body.trim().toLowerCase();
     console.log('رسالة واصلة: ' + text);
 
-     if (text === 'بداية' || text === 'قائمة') {
+    if (text === 'بداية' || text === 'قائمة') {
         await msg.reply(
             "🏥 *مرحباً بك في نظام دعم مستشفى العيون*\n\n" +
             "أرسل الرقم المطلوب:\n" +
@@ -43,25 +43,22 @@ client.on('message', async msg => {
         );
     } 
     else if (text === '1') {
-        await msg.reply("📋 *إجراءات التشغيل:* \n- تعقيم (ارسل 'تعقيم')\n- استقبال (ارسل 'ليزر')");
+        await msg.reply("📋 *إجراءات التشغيل:* \n- تعقيم (ارسل 'تعقيم')\n- استقبال (ارسل 'استقبال')");
     } 
     else if (text === '2') {
-        await msg.reply("📅 *المناوبات:* د. أحمد (مناوب العمليات) - م. سارة (مشرف التمريض)");
+        await msg.reply("📅 *المناوبات:* \n- م.رشيد(الأحد 72 ساعة)\n- م.ط.د.ع.ا.م.ي شرين (أي يوم أي ساعة)\n- م.أحمد (السبت 24 ساعة)");
+    }
+    else if (text === '3')
+        await msg.reply()        
+    else if (text === 'أستقبال') {
+        await msg.reply("🧴 *خطوات الأستقبال:* \n1. أبتسام عشان محترمين \n2. ما نثقل دمنا على الناس .. \n3. ما بنتأخر في الدوام لانو عنا أهل يسئلو علينا");
     }
     else if (text === 'تعقيم') {
         await msg.reply("🧴 *خطوات التعقيم:* \n1. تطهير الأسطح بـ.. \n2. تشغيل جهاز.. \n3. توثيق السجل.");
     }
 });
 
-app.get('/', (req, res) => {
-    if (lastQr) {
-        const qrImage = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(lastQr)}&size=300x300`;
-        res.send(`<center><h1>Scan QR</h1><img src="${qrImage}"></center>`);
-    } else {
-        res.send('<center><h1 style="color:green;">✅ Bot is Connected!</h1></center>');
-    }
-});
-
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
