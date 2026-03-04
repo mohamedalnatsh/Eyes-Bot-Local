@@ -45,7 +45,6 @@ client.on('message', async msg => {
     else if (text === 'تعقيم') {
         await msg.reply("🧴 *خطوات التعقيم:* \n1. تطهير الأسطح بـ.. \n2. تشغيل جهاز.. \n3. توثيق السجل.");
     }
-});
     else if (text === '4') {
         try {
             const media = MessageMedia.fromFilePath('./security.pdf');
@@ -59,3 +58,4 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
