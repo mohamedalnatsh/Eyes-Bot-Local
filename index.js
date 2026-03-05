@@ -40,7 +40,7 @@ client.on('message', async msg => {
     } 
     else if (text === '1') {
         await msg.reply("📋 *إجراءات التشغيل:* \n- تعقيم (ارسل 'تعقيم')\n- استقبال (ارسل 'استقبال')");
-    } ح
+    }
     else if (text === '2') {
         await msg.reply("📅 *المناوبات:* \n- م.رشيد(الأحد 72 ساعة)\n- م.ط.د.ع.ا.م.ي شرين (أي يوم أي ساعة)\n- م.أحمد (السبت 24 ساعة)");
     }
@@ -76,6 +76,7 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
 
 
