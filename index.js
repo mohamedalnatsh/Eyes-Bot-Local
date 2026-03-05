@@ -16,6 +16,24 @@ const client = new Client({
         executablePath: '/usr/bin/chromium-browser' 
     }
 });
+const { exec } = require('child_process');
+
+function checkInternetAndStart() {
+    console.log("Checking internet connection...");
+    // محاولة عمل ping لـ Google للتأكد من وجود نت
+    exec('ping -c 1 google.com', (error) => {
+        if (error) {
+            console.log("No internet yet, retrying in 10 seconds...");
+            setTimeout(checkInternetAndStart, 10000); // إعادة المحاولة بعد 10 ثواني
+        } else {
+            console.log("Internet connected! Starting the bot...");
+            client.initialize(); // تشغيل البوت فقط عند وجود نت
+        }
+    });
+}
+
+// استبدل سطر client.initialize() القديم بهذا الاستدعاء:
+checkInternetAndStart();
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
@@ -76,6 +94,7 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
 
 
