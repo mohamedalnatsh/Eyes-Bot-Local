@@ -17,6 +17,13 @@ const client = new Client({
     }
 });
 
+client.on('qr', (qr) => {
+    qrcode.generate(qr, {small: true});
+});
+
+client.on('ready', () => {
+    console.log('✅ البوت جاهز الآن!');
+});
 
 client.on('message', async msg => {
     const text = msg.body.trim().toLowerCase();
