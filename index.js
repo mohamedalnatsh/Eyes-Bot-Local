@@ -64,7 +64,6 @@ client.on('message', async msg => {
     }
     else {
         await msg.reply(
-            "⚠️ *عذراً، لم أفهم طلبك.*\n\n" +
             "🏥 *إليك القائمة الرئيسية لمستشفى العيون:*\n" +
             "1. إجراءات التشغيل (SOPs)\n" +
             "2. جداول المناوبات اليومية\n" +
@@ -77,3 +76,4 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
