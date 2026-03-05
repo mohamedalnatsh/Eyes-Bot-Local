@@ -61,12 +61,13 @@ client.on('message', async msg => {
             await msg.reply("⚠️ عذراً، حدث خطأ أثناء محاولة إرسال ملف الجدول.");
         }
     
-    }
+        }
     }
 });
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
 
 
