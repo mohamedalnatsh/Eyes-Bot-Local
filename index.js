@@ -27,6 +27,14 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
     const text = msg.body.trim().toLowerCase();
+        await msg.reply(
+            "🏥 *مرحباً بك في نظام دعم مستشفى العيون*\n\n" +
+            "أرسل الرقم المطلوب:\n" +
+            "1. إجراءات التشغيل SOPs\n" +
+            "2. جداول المناوبات اليومية\n" +
+            "3. تعليمات العمليات\n" +
+            "4. جدول دوام الأمن PDF\n"
+        );
     
     if (text === 'بداية' || text === 'قائمة') {
         await msg.reply(
@@ -77,6 +85,7 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
 
 
