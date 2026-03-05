@@ -55,7 +55,7 @@ client.on('message', async msg => {
     else if (text === '3'){
         await msg.reply("*تعليمات العمليات* \n- تنظيف الشسمو \n- طرد البشر من الغرفة \n- أغلاق الأجهزة الألكترونية");        
     }
-    else if (text === 'أستقبال') {
+    else if (text === 'استقبال') {
         await msg.reply("🧴 *خطوات الأستقبال:* \n1. أبتسام عشان محترمين \n2. ما نثقل دمنا على الناس .. \n3. ما بنتأخر في الدوام لانو عنا أهل يسئلو علينا");
     }
     else if (text === 'تعقيم') {
@@ -85,6 +85,7 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
 
 
