@@ -3,17 +3,20 @@ const qrcode = require('qrcode-terminal');
 const express = require('express');
 const path = require('path');   
 const app = express();
-
 const client = new Client({
     authStrategy: new LocalAuth(),
-    webVersionCache: {
-        type: 'remote',
-        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-js/main/dist/wppconnect-wa.js'
-    },
     puppeteer: {
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-        executablePath: '/usr/bin/chromium-browser' 
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process', // هذا الخيار يحل مشكلة الـ memlock
+            '--disable-gpu'
+        ],
     }
 });
 const { exec } = require('child_process');
@@ -94,6 +97,7 @@ client.on('message', async msg => {
 
 app.listen(8080, '0.0.0.0');
 client.initialize();
+
 
 
 
