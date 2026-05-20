@@ -14,7 +14,7 @@ const client = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--single-process', // هذا الخيار يحل مشكلة الـ memlock
+            '--single-process',
             '--disable-gpu'
         ],
     }
@@ -35,7 +35,6 @@ function checkInternetAndStart() {
     });
 }
 
-// استبدل سطر client.initialize() القديم بهذا الاستدعاء:
 checkInternetAndStart();
 
 client.on('qr', (qr) => {
