@@ -70,6 +70,6 @@ package.json - Declares production standard dependencies.
 🔒 Security Compliance
 ⚠️This bot uses LocalAuth strategies ensuring authentication tokens remain safely inside internal system folders, preventing cross-session credential leaks.
 ```
-##🛡️ Legal & Privacy Disclaimer
+## 🛡️ Legal & Privacy Disclaimer
 This tool was built for educational and deployment simulation purposes. All sensitive hospital operational names, credentials, and network configurations in this public repository have been heavily obfuscated, modified, or completely replaced with placeholder mock data to strictly adhere to cybersecurity standards and privacy policies.
 
