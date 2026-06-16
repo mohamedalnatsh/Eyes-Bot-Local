@@ -5,7 +5,7 @@ An automated, lightweight WhatsApp assistant developed using `whatsapp-web.js` a
 ---
 
 ## ⚠️ Important Notice (Demo Version)
-> **NOTE:** This repository contains a **Demo / Proof of Concept (PoC)** version of the application. All sensitive hospital infrastructure details, real medical personnel data, custom workflows, and production API tokens have been stripped out or mocked to maintain institutional security and privacy compliance. This code serves as public evidence of the bot's architectural design and core features.
+> **NOTE:** This repository contains a **Demo** version of the application. All sensitive hospital infrastructure details, real medical personnel data, custom workflows, and production API tokens have been stripped out or mocked to maintain institutional security and privacy compliance. This code serves as public evidence of the bot's architectural design and core features.
 
 ---
 
